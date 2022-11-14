@@ -1,0 +1,91 @@
+#version 430 core
+layout(local_size_x = 8, local_size_y = 8, local_size_z = 8) in;
+uniform sampler3D u_VoxelGrid;
+uniform sampler3D u_VoxelGridNormal;
+uniform sampler2D rsmPosition;
+layout(RGBA8) uniform image3D u_VoxelGridDirectLight;
+
+uniform int u_VoxelResolution;
+uniform vec3 u_VoxelScale;
+uniform vec3 u_LightDir;
+uniform mat4 u_LightVPMatrix;
+uniform float u_Near = 0.1;
+uniform float u_Far = 1000.0f;
+
+const float EPSILON = 1e-30;
+vec3 getWorldPos(ivec3 cellIndex){
+
+	vec3 index = vec3(cellIndex);
+	//ndc
+	vec3 Pos = index/u_VoxelResolution;
+	//clip
+	Pos = (Pos*2.0)-1.0;
+
+	return Pos/u_VoxelScale;
+
+
+}
+
+vec3 DecodeNormal(vec3 normal)
+{
+    return normal * 2.0f - vec3(1.0f);
+}
+
+vec4 CalculateDirectLight(vec3 worldPos , vec3 normal ,vec3 albedo){
+
+	 normal = normalize(normal);
+
+	 vec3 step = 2/(u_VoxelResolution)/u_VoxelScale;
+
+	 worldPos = worldPos+normal*step*0.5;
+
+	 vec4 LightVP = u_LightVPMatrix*vec4(worldPos,1.0);
+
+	 LightVP/=LightVP.w;
+	
+	 LightVP.xyz = LightVP.xyz*0.5+0.5;
+
+	 float depth = LightVP.z;
+
+	 float closetDepth = texture(rsmPosition,LightVP.xy).a;
+
+	 float visibility = depth-0.02<closetDepth?1.0:0.0;
+	// visibility = 1.0;
+
+
+	 return vec4(albedo*visibility,1.0);
+
+}
+
+
+void main(){
+
+     if(gl_GlobalInvocationID.x >= u_VoxelResolution ||
+		gl_GlobalInvocationID.y >= u_VoxelResolution ||
+		gl_GlobalInvocationID.z >= u_VoxelResolution) return;
+
+
+	ivec3 cellIndex = ivec3(gl_GlobalInvocationID);
+
+	vec4 albedo = texelFetch(u_VoxelGrid,cellIndex,0);
+
+	if(albedo.a < EPSILON) { return; }
+
+	albedo.a = 0.0f;
+
+	vec3 normal = DecodeNormal(texelFetch(u_VoxelGridNormal,cellIndex,0).xyz);
+
+	vec4 radiance = vec4(vec3(0.0),1.0);
+
+	if(any(greaterThan(albedo.rgb, vec3(0.0f)))){
+	
+		vec3 worldPos = getWorldPos(cellIndex);
+	
+		radiance = CalculateDirectLight(worldPos,normal,albedo.rgb);
+	}
+
+	imageStore(u_VoxelGridDirectLight,cellIndex,radiance);
+
+}
+
+
