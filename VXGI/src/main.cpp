@@ -68,7 +68,7 @@ int main()
 
     std::string s = "aaa";
 
-    std::shared_ptr<Scene> scene = std::make_shared<Scene>(Camera(glm::vec3(0, 0, 0)), Light(glm::vec3(0, -0.304485, 2.43392), glm::vec3(1.0)));
+    std::shared_ptr<Scene> scene = std::make_shared<Scene>(Camera(glm::vec3(0, 0, 0)), Light(glm::vec3(0, -0.304485, 2.43392), glm::vec3(1.0)),1000.0);
     //scene->LoadScene("d:/user/wkx/desktop/grapincs/rendertoy/gi/model/sponza.obj");
 
     scene->LoadModel("d:/user/wkx/desktop/grapincs/rendertoy/gi/model/sponza.obj");
@@ -79,12 +79,12 @@ int main()
 
     RenderManager::get_instance().regisiterRenderPass(std::make_shared<RSMBufferPass>("RSMBufferPass", "./shader/RSMBufferPass.vs", "./shader/RSMBufferPass.fs"));
 
-    //RenderManager::get_instance().regisiterRenderPass(std::make_shared<GbufferPass>("Gbuffer", "./shader/VXGI/gbuffer.vs", "./shader/VXGI/gbuffer.fs"));
+    RenderManager::get_instance().regisiterRenderPass(std::make_shared<GbufferPass>("Gbuffer", "./shader/gbuffer.vs", "./shader/gbuffer.fs"));
 
-    //RenderManager::get_instance().regisiterRenderPass(std::make_shared<ScreenQuadPass>("ScreenQuadPass", "./shader/VXGI/ScreenQuadPass.vs", "./shader/VXGI/ScreenQuadPass.fs"));
+    RenderManager::get_instance().regisiterRenderPass(std::make_shared<ScreenQuadPass>("ScreenQuadPass", "./shader/ScreenQuadPass.vs", "./shader/ScreenQuadPass.fs"));
 
    // RenderManager::get_instance().regisiterRenderPass(std::make_shared<RenderLightPass>("RenderLightPass", "./shader/VXGI/RenderLightPass.vs", "./shader/VXGI/RenderLightPass.fs"));
-    RenderManager::get_instance().regisiterRenderPass(std::make_shared<VoxelizePass>("VoxelizePass", "./shader/VoxelizePass.vs", "./shader/VoxelizePass.fs", "./shader/VoxelizePass.gs"));
+    //RenderManager::get_instance().regisiterRenderPass(std::make_shared<VoxelizePass>("VoxelizePass", "./shader/VoxelizePass.vs", "./shader/VoxelizePass.fs", "./shader/VoxelizePass.gs"));
     //RenderManager::get_instance().regisiterRenderPass(std::make_shared<VoxelLightInjectPass>("VoxelLightInjectPass", "./shader/VXGI/VoxelLightInjectPass.comp"));
 
    //RenderManager::get_instance().regisiterRenderPass(std::make_shared<FrontWorldPosPass>("FrontWorldPosPass", "./shader/VXGI/world_pos_vert.vs", "./shader/VXGI/world_pos_vert.fs"));
@@ -92,7 +92,7 @@ int main()
 
     //RenderManager::get_instance().regisiterRenderPass(std::make_shared<VoxelvisualizePass>("VoxelvisualizePass", "./shader/VXGI/VoxelvisualizePass.vs", "./shader/VXGI/VoxelvisualizePass.fs"));
 
-     RenderManager::get_instance().regisiterRenderPass(std::make_shared<ConeTracingPass>("ConeTracingPass", "./shader/ConeTracingPass.vs", "./shader/ConeTracingPass.fs"));
+     //RenderManager::get_instance().regisiterRenderPass(std::make_shared<ConeTracingPass>("ConeTracingPass", "./shader/ConeTracingPass.vs", "./shader/ConeTracingPass.fs"));
 
     //RenderManager::get_instance().regisiterRenderPass(std::make_shared<DefferedConeTracingPass>("DefferedConeTracingPass", "./shader/VXGI/DefferedConeTracingPass.vs", "./shader/VXGI/DefferedConeTracingPass.fs"));
 
