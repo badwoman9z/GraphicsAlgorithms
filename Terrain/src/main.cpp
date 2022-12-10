@@ -11,7 +11,7 @@
 #include "GUI.h"
 #include"scene/Light.h"
 #include"scene/scene.h"
-
+#include"SampleTerrainPass.h"
 // settings
 const unsigned int SCR_WIDTH = 1920;
 const unsigned int SCR_HEIGHT = 1080;
@@ -50,10 +50,10 @@ int main()
     std::string s = "aaa";
 
     std::shared_ptr<Scene> scene = std::make_shared<Scene>(Camera(glm::vec3(0, 0, 0)), Light(glm::vec3(0, -0.304485, 2.43392), glm::vec3(1.0)), 100000.0f);
-
+    RenderManager::get_instance().regisiterScene(scene);
     //scene->farPlane = 30.0f;
-
-
+    //RenderManager::get_instance().regisiterRenderPass(std::make_shared<SampleTerrainPass>("SampleTerrainPass", "./shader/gpuheight.vs", "./shader/gpuheight.fs", "./shader/gpuheight.tcs", "./shader/gpuheight.tes"));
+    RenderManager::get_instance().regisiterRenderPass(std::make_shared<SampleTerrainPass>("SampleTerrainPass", "./shader/gpuheight.vs", "./shader/gpuheight.fs"));
     RenderManager::get_instance().init();
 
     ProcessInpute::camera = scene->camera;

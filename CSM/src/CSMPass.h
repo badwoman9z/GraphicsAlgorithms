@@ -11,6 +11,7 @@ struct Frustum {
 	float Far;
 };
 
+
 class CSMPass:public RenderPass
 {
 public:

@@ -11,7 +11,10 @@ public:
 	RenderPass(std::string name, const char* cspath) :passName(name) {
 		shader = std::make_shared<Shader>(cspath);
 	}
-
+	RenderPass(std::string name, const char* vspath, const char* fspath, const char* tessControlPath,
+		const char* tessEvalPath) :passName(name) {
+		shader = std::make_shared<Shader>(vspath, fspath, tessControlPath, tessEvalPath);
+	}
 	std::string passName;
 	std::shared_ptr<Shader> shader;
 	virtual void init() = 0;

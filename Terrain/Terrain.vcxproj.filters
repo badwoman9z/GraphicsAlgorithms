@@ -69,4 +69,10 @@
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="shader\gpuheight.vs" />
+    <None Include="shader\gpuheight.fs" />
+    <None Include="shader\gpuheight.tcs" />
+    <None Include="shader\gpuheight.tes" />
+  </ItemGroup>
 </Project>

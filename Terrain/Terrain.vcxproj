@@ -78,6 +78,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)Terrain\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -161,6 +162,17 @@
     <ClInclude Include="include\imgui\stb_truetype.h" />
     <ClInclude Include="src\SampleTerrainPass.h" />
     <ClInclude Include="src\Terrain.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shader\gpuheight.fs" />
+    <None Include="shader\gpuheight.tcs" />
+    <None Include="shader\gpuheight.tes" />
+    <None Include="shader\gpuheight.vs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Frame\Frame.vcxproj">
+      <Project>{1973341a-6817-41a1-bf7f-6046505b2644}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

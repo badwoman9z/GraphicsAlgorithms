@@ -143,6 +143,7 @@
     <ClCompile Include="opengl\EBO.cpp" />
     <ClCompile Include="opengl\Texture.cpp" />
     <ClCompile Include="render\RenderManager.cpp" />
+    <ClCompile Include="render\shader.cpp" />
     <ClCompile Include="scene\AABB.cpp" />
     <ClCompile Include="scene\Mesh.cpp" />
     <ClCompile Include="scene\object.cpp" />
